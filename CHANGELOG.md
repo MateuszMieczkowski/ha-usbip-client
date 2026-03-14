@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4] - 2026-03-14
+
+### Security
+
+- **CRITICAL FIX**: Fixed command injection vulnerability in device configuration (CVE pending)
+- Added input validation for IP addresses and USB bus IDs
+- Improved variable quoting in generated shell scripts
+- Added protection against malicious configuration values
+
+### Added
+
+- Comprehensive security audit documentation (SECURITY_AUDIT.md)
+- Security policy and vulnerability reporting guidelines (SECURITY.md)
+- Input validation functions for IP addresses and bus IDs
+- Security-focused code comments throughout scripts
+
+### Changed
+
+- Enhanced README with security features section
+- Updated security considerations with best practices
+- Improved error handling for invalid configuration values
+
 ## [0.1.3] - 2024-12-21
 
 ### Changed

@@ -63,6 +63,8 @@ Replace `192.168.1.44` with your USB/IP server IP address and provide the correc
 
 ## Security Considerations
 
+⚠️ **Important**: This add-on requires elevated privileges to access and manage USB devices, which has significant security implications.
+
 This add-on requires elevated privileges to access and manage USB devices, which has potential security implications:
 
 - **Full Access**: The add-on is granted full access to the host system, which allows it to interact directly with USB devices and kernel modules.
@@ -70,11 +72,28 @@ This add-on requires elevated privileges to access and manage USB devices, which
 - **Host Network**: The add-on uses the host's network stack (host_network: true). This means that any vulnerabilities in the USB/IP protocol could potentially impact the host system.
 - **Privileged Operations**: The add-on requires several Linux capabilities (NET_ADMIN, SYS_ADMIN, SYS_RAWIO, etc.) to perform USB management operations. These permissions are powerful and, if exploited, could compromise the host system.
 
+### Security Features (v0.1.3+)
+
+- ✅ Input validation for IP addresses and USB bus IDs
+- ✅ Protection against command injection attacks
+- ✅ Sanitized configuration values
+- ✅ Comprehensive security audit completed
+
+### Best Practices
+
 It is recommended to:
 
 - Only use this add-on in a trusted network environment.
+- Restrict configuration access to trusted administrators only.
 - Regularly update the add-on to incorporate security patches.
 - Limit access to the Home Assistant instance to reduce exposure.
+- Review logs regularly for suspicious activity.
+
+### Security Documentation
+
+For detailed security information, see:
+- [SECURITY.md](SECURITY.md) - Security policy and vulnerability reporting
+- [SECURITY_AUDIT.md](SECURITY_AUDIT.md) - Complete security audit report
 
 ## Related Automation for Add-on Management
 

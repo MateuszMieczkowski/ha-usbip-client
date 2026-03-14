@@ -9,7 +9,38 @@ declare script_directory="/usr/local/bin"
 declare mount_script="/usr/local/bin/mount_devices"
 declare discovery_server_address
 
+# Security: Function to validate IP address format
+validate_ip_address() {
+    local ip="$1"
+    if [[ ! "${ip}" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        return 1
+    fi
+    # Additional validation: each octet should be 0-255
+    local IFS='.'
+    local -a octets=($ip)
+    for octet in "${octets[@]}"; do
+        if ((octet > 255)); then
+            return 1
+        fi
+    done
+    return 0
+}
+
+# Security: Function to validate bus_id format (e.g., "1-1.1.3" or "1-1")
+validate_bus_id() {
+    local bus_id="$1"
+    if [[ ! "${bus_id}" =~ ^[0-9]+-[0-9]+(\.[0-9]+)*$ ]]; then
+        return 1
+    fi
+    return 0
+}
+
 discovery_server_address=$(bashio::config 'discovery_server_address')
+
+# Security: Validate discovery_server_address
+if ! validate_ip_address "${discovery_server_address}"; then
+    bashio::exit.nok "Invalid discovery_server_address format: ${discovery_server_address}. Must be a valid IPv4 address."
+fi
 
 bashio::log.info ""
 bashio::log.info "-----------------------------------------------------------------------"
@@ -62,15 +93,28 @@ for device in $(bashio::config 'devices|keys'); do
     server_address=$(bashio::config "devices[${device}].server_address")
     bus_id=$(bashio::config "devices[${device}].bus_id")
 
+    # Security: Validate server_address format
+    if ! validate_ip_address "${server_address}"; then
+        bashio::log.error "Invalid server_address format for device ${device}: ${server_address}. Skipping this device."
+        continue
+    fi
+
+    # Security: Validate bus_id format
+    if ! validate_bus_id "${bus_id}"; then
+        bashio::log.error "Invalid bus_id format for device ${device}: ${bus_id}. Skipping this device."
+        continue
+    fi
+
     bashio::log.info "Adding device from server ${server_address} on bus ${bus_id}"
 
+    # Security: Properly quote variables to prevent command injection
     # Detach any existing attachments
     bashio::log.debug "Detaching device ${bus_id} from server ${server_address} if already attached."
-    echo "/usr/sbin/usbip detach -r ${server_address} -b ${bus_id} >/dev/null 2>&1 || true" >>"${mount_script}"
+    printf '/usr/sbin/usbip detach -r %q -b %q >/dev/null 2>&1 || true\n' "${server_address}" "${bus_id}" >>"${mount_script}"
 
     # Attach the device
     bashio::log.debug "Attaching device ${bus_id} from server ${server_address}."
-    echo "/usr/sbin/usbip attach --remote=${server_address} --busid=${bus_id}" >>"${mount_script}"
+    printf '/usr/sbin/usbip attach --remote=%q --busid=%q\n' "${server_address}" "${bus_id}" >>"${mount_script}"
 done
 
 bashio::log.info "Device configuration complete. Ready to attach devices."
