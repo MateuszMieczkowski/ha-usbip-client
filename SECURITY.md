@@ -4,7 +4,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.1.3+  | :white_check_mark: |
+| 0.1.4+  | :white_check_mark: |
+| 0.1.3   | :x: (has critical vulnerability) |
 | < 0.1.3 | :x:                |
 
 ## Security Considerations
@@ -29,7 +30,7 @@ This Home Assistant add-on requires elevated privileges to manage USB devices, w
 
 ### Input Validation
 
-Starting from version 0.1.3, the add-on includes:
+Starting from version 0.1.4, the add-on includes:
 
 - IP address format validation (IPv4 only)
 - USB bus ID format validation (e.g., "1-1.1.3")
@@ -78,7 +79,7 @@ See [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for the complete audit report.
 
 ## Security Changelog
 
-### Version 0.1.3+
+### Version 0.1.4
 - ✅ Added input validation for IP addresses
 - ✅ Added input validation for USB bus IDs
 - ✅ Fixed command injection vulnerability (CVE pending)
@@ -86,7 +87,7 @@ See [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for the complete audit report.
 - ✅ Added security-focused code comments
 - ✅ Created comprehensive security documentation
 
-### Version < 0.1.3
+### Version 0.1.3 and earlier
 - ⚠️ Command injection vulnerability present (CRITICAL)
 - ⚠️ No input validation
 

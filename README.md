@@ -72,7 +72,7 @@ This add-on requires elevated privileges to access and manage USB devices, which
 - **Host Network**: The add-on uses the host's network stack (host_network: true). This means that any vulnerabilities in the USB/IP protocol could potentially impact the host system.
 - **Privileged Operations**: The add-on requires several Linux capabilities (NET_ADMIN, SYS_ADMIN, SYS_RAWIO, etc.) to perform USB management operations. These permissions are powerful and, if exploited, could compromise the host system.
 
-### Security Features (v0.1.3+)
+### Security Features (v0.1.4+)
 
 - ✅ Input validation for IP addresses and USB bus IDs
 - ✅ Protection against command injection attacks

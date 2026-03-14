@@ -2,6 +2,7 @@
 
 **Audit Date**: 2026-03-14  
 **Audited Version**: 0.1.3  
+**Fixed in Version**: 0.1.4  
 **Repository**: https://github.com/MateuszMieczkowski/ha-usbip-client
 
 ---
