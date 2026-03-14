@@ -72,7 +72,7 @@ A comprehensive security audit was performed on 2026-03-14. Key findings:
 - ✅ **No backdoors or malware detected**
 - ✅ **No hardcoded credentials**
 - ✅ **No external code downloads**
-- ✅ **Command injection vulnerability fixed** (v0.1.3+)
+- ✅ **Command injection vulnerability fixed** (v0.1.4+)
 - ⚠️ **High privileges required** (inherent to functionality)
 
 See [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for the complete audit report.
